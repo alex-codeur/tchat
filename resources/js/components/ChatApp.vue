@@ -28,18 +28,18 @@
             <i class="fa fa-star"></i>
         </div> <!-- end chat-header -->
         
-        <div class="chat-history">
+        <div class="chat-history" v-chat-scroll>
             <ul>
-            <li class="clearfix" v-for="message in userMessage.messages" :key="message.id">
-                <div class="message-data align-right">
-                <span class="message-data-time" >{{message.created_at | timeformat}}</span> &nbsp; &nbsp;
-                <span class="message-data-name" >{{message.user.name}}</span> <i class="fa fa-circle me"></i>
-                
-                </div>
-                <div :class="`message float-right ${message.user.id==userMessage.user.id ? 'other-message' : 'my-message'}`">
-                    {{message.message}}
-                </div>
-            </li>
+                <li class="clearfix" v-for="message in userMessage.messages" :key="message.id">
+                    <div class="message-data align-right">
+                    <span class="message-data-time" >{{message.created_at | timeformat}}</span> &nbsp; &nbsp;
+                    <span class="message-data-name" >{{message.user.name}}</span> <i class="fa fa-circle me"></i>
+                    
+                    </div>
+                    <div :class="`message float-right ${message.user.id==userMessage.user.id ? 'other-message' : 'my-message'}`">
+                        {{message.message}}
+                    </div>
+                </li>
            
             
             </ul>
@@ -47,7 +47,7 @@
         </div> <!-- end chat-history -->
         
         <div class="chat-message clearfix">
-            <textarea name="message-to-send" id="message-to-send" placeholder ="Type your message" rows="3"></textarea>
+            <textarea @keydown.enter="sendMessage" v-model="message" name="message-to-send" id="message-to-send" placeholder ="Type your message" rows="3"></textarea>
                     
             <i class="fa fa-file-o"></i> &nbsp;&nbsp;&nbsp;
             <i class="fa fa-file-image-o"></i>
@@ -70,7 +70,7 @@ export default {
     },
     data() {
         return {
-
+            message:  ''
         }
     },
     computed: {
@@ -87,11 +87,19 @@ export default {
     methods: {
         selectUser(userId) {
             this.$store.dispatch('userMessage', userId);
+        },
+        sendMessage(e) {
+            e.preventDefault();
+            axios.post('sendmessage',{message:this.message, user_id:this.userMessage.user.id})
+                .then(response => {
+                    this.selectUser(this.userMessage.user.id)
+                })
+                this.message = '';
         }
     }
 }
 </script>
 
 <style scoped>
-
+    .people-list ul{overflow-y: scroll !important}
 </style>

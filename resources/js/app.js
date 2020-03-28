@@ -9,6 +9,9 @@ import filter from './filter'
 
 Vue.use(Vuex)
 
+import VueChatScroll from 'vue-chat-scroll'
+Vue.use(VueChatScroll)
+
 const store = new Vuex.Store(storeVuex)
 
 
