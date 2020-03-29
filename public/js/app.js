@@ -1972,6 +1972,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     this.$store.dispatch('userList');
@@ -2005,6 +2020,20 @@ __webpack_require__.r(__webpack_exports__);
         _this.selectUser(_this.userMessage.user.id);
       });
       this.message = '';
+    },
+    deleteSingleMessage: function deleteSingleMessage(messageId) {
+      var _this2 = this;
+
+      axios.get("/deletesinglemessage/".concat(messageId)).then(function (response) {
+        _this2.selectUser(_this2.userMessage.user.id);
+      });
+    },
+    deleteAllMessage: function deleteAllMessage() {
+      var _this3 = this;
+
+      axios["delete"]("/deleteallmessage/".concat(this.userMessage.user.id)).then(function (response) {
+        _this3.selectUser(_this3.userMessage.user.id);
+      });
     }
   }
 });
@@ -38061,7 +38090,42 @@ var render = function() {
           ])
         ]),
         _vm._v(" "),
-        _c("i", { staticClass: "fa fa-star" })
+        _c("i", { staticClass: "fa fa-star" }),
+        _vm._v(" "),
+        _c("ul", { staticClass: "nav nav-tabs" }, [
+          _c("li", { staticClass: "nav-item dropdown" }, [
+            _c(
+              "a",
+              {
+                staticClass: "nav-link dropdown-toggle",
+                attrs: {
+                  "data-toggle": "dropdown",
+                  href: "#",
+                  role: "button",
+                  "aria-haspopup": "true",
+                  "aria-expanded": "false"
+                }
+              },
+              [_vm._v("...")]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "dropdown-menu" }, [
+              _c(
+                "a",
+                {
+                  staticClass: "dropdown-item",
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      return _vm.deleteAllMessage($event)
+                    }
+                  }
+                },
+                [_vm._v("Delete All Message")]
+              )
+            ])
+          ])
+        ])
       ]),
       _vm._v(" "),
       _c(
@@ -38084,7 +38148,43 @@ var render = function() {
                     _vm._v(_vm._s(message.user.name))
                   ]),
                   _vm._v(" "),
-                  _c("i", { staticClass: "fa fa-circle me" })
+                  _c("i", { staticClass: "fa fa-circle me" }),
+                  _vm._v(" "),
+                  _c("ul", { staticClass: "nav nav-tabs" }, [
+                    _c("li", { staticClass: "nav-item dropdown" }, [
+                      _c(
+                        "a",
+                        {
+                          staticClass: "nav-link dropdown-toggle",
+                          attrs: {
+                            "data-toggle": "dropdown",
+                            href: "#",
+                            role: "button",
+                            "aria-haspopup": "true",
+                            "aria-expanded": "false"
+                          }
+                        },
+                        [_vm._v("...")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "dropdown-menu" }, [
+                        _c(
+                          "a",
+                          {
+                            staticClass: "dropdown-item",
+                            attrs: { href: "#" },
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                return _vm.deleteSingleMessage(message.id)
+                              }
+                            }
+                          },
+                          [_vm._v("Delete Message")]
+                        )
+                      ])
+                    ])
+                  ])
                 ]),
                 _vm._v(" "),
                 _c(
@@ -51496,8 +51596,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _store_index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./store/index */ "./resources/js/store/index.js");
 /* harmony import */ var _filter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./filter */ "./resources/js/filter.js");
 /* harmony import */ var _filter__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_filter__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var vue_chat_scroll__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue-chat-scroll */ "./node_modules/vue-chat-scroll/dist/vue-chat-scroll.js");
-/* harmony import */ var vue_chat_scroll__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(vue_chat_scroll__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var vue_chat_scroll__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-chat-scroll */ "./node_modules/vue-chat-scroll/dist/vue-chat-scroll.js");
+/* harmony import */ var vue_chat_scroll__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vue_chat_scroll__WEBPACK_IMPORTED_MODULE_3__);
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
@@ -51506,7 +51606,7 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 
 Vue.use(vuex__WEBPACK_IMPORTED_MODULE_0__["default"]);
 
-Vue.use(vue_chat_scroll__WEBPACK_IMPORTED_MODULE_4___default.a);
+Vue.use(vue_chat_scroll__WEBPACK_IMPORTED_MODULE_3___default.a);
 var store = new vuex__WEBPACK_IMPORTED_MODULE_0__["default"].Store(_store_index__WEBPACK_IMPORTED_MODULE_1__["default"]);
 Vue.component('example-component', __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue")["default"]);
 Vue.component('main-app', __webpack_require__(/*! ./components/MainApp.vue */ "./resources/js/components/MainApp.vue")["default"]);

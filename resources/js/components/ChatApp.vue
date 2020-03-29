@@ -26,6 +26,14 @@
             <div class="chat-num-messages">already 1 902 messages</div>
             </div>
             <i class="fa fa-star"></i>
+            <ul class="nav nav-tabs">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">...</a>
+                    <div class="dropdown-menu">
+                        <a @click.prevent="deleteAllMessage" class="dropdown-item">Delete All Message</a>
+                    </div>
+                </li>
+            </ul>
         </div> <!-- end chat-header -->
         
         <div class="chat-history" v-chat-scroll>
@@ -34,7 +42,14 @@
                     <div class="message-data align-right">
                     <span class="message-data-time" >{{message.created_at | timeformat}}</span> &nbsp; &nbsp;
                     <span class="message-data-name" >{{message.user.name}}</span> <i class="fa fa-circle me"></i>
-                    
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">...</a>
+                            <div class="dropdown-menu">
+                                <a @click.prevent="deleteSingleMessage(message.id)" href="#" class="dropdown-item">Delete Message</a>
+                            </div>
+                        </li>
+                    </ul>
                     </div>
                     <div :class="`message float-right ${message.user.id==userMessage.user.id ? 'other-message' : 'my-message'}`">
                         {{message.message}}
@@ -95,6 +110,18 @@ export default {
                     this.selectUser(this.userMessage.user.id)
                 })
                 this.message = '';
+        },
+        deleteSingleMessage(messageId) {
+            axios.get(`/deletesinglemessage/${messageId}`)
+                .then(response => {
+                    this.selectUser(this.userMessage.user.id)
+                })
+        },
+        deleteAllMessage() {
+            axios.delete(`/deleteallmessage/${this.userMessage.user.id}`)
+                .then(response => {
+                    this.selectUser(this.userMessage.user.id)
+                })
         }
     }
 }
