@@ -81,6 +81,10 @@
 
 export default {
     mounted() {
+        Echo.private(`chat.${authuser.id}`)
+        .listen('OrderShipped', (e) => {
+            console.log("OK");
+        });
         this.$store.dispatch('userList');
     },
     data() {

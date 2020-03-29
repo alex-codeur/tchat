@@ -60,6 +60,8 @@ class MessageController extends Controller
             'type' => 1
         ]);
 
+        broadcast(new MessageSend($messages));
+
         return response()->json($messages, 201);
     }
 
